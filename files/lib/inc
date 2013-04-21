@@ -12,7 +12,7 @@ fi
 update_vars
 ## experimental backup log output 
 copy_out $full_backup_path/surrogate.log
-echo $full_backup_path/surrogate.log | sed "s;/backup;<a href=$backup_report_host/`hostname`>View Log File</a>;" >> $surr_inc_status
+echo $full_backup_path/surrogate.log | awk -v brh=$backup_report_host -v h=$server -F "/backup" '{print "<a href="brh"/"h$2">View Log File</a>"}' >> $surr_inc_status
 ##
 # Explain what is being sent to innobackupex.
 echo $inc_backup
