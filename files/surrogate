@@ -5,6 +5,7 @@
 cd
 set -u
 count=0
+server=`hostname`
 
 # empty vars on initial call, can reuse init() if needed
 init() {

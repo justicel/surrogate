@@ -15,7 +15,7 @@ determine_full_backup_path
 mkdir -p $full_backup_path
 ## experimental backup log output 
 copy_out $full_backup_path/surrogate.log
-echo $full_backup_path/surrogate.log | sed "s;/backup;<a href=$backup_report_host/`hostname`>View Log File</a>;" >> $surr_full_status
+echo $full_backup_path/surrogate.log | awk -v brh=$backup_report_host -v h=$server -F "/backup" '{print "<a href="brh"/"h$2">View Log File</a>"}' >> $surr_full_status
 ##
 dblist=`mysql -u $mysql_user -p${mysql_pass} -S $mysql_socket -se "show databases"  | grep -v ^Database$ | grep -v ^information_schema$`
 catch $surr_full_status
