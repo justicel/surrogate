@@ -10,6 +10,12 @@ fi
 
 # Re-read surrogate.conf
 update_vars
+## experimental backup log output 
+copy_out $full_backup_path/surrogate.log
+echo $full_backup_path/surrogate.log >> $surr_inc_status
+echo $full_backup_path/surrogate.log | sed "s;/backup;$backup_report_host/`hostname`;" >> $surr_inc_statu
+s
+##
 # Explain what is being sent to innobackupex.
 echo $inc_backup
 # Perform incremental backup from where the last backup stopped.

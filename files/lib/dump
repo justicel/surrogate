@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # surrogate full backup function using mysqldump
 dump_err=0
+:> $surr_full_status
 
 perform_action() {
 instance=$1
@@ -12,6 +13,11 @@ fi
 # Determine full_backup_path based on day of week and day of month
 determine_full_backup_path
 mkdir -p $full_backup_path
+## experimental backup log output 
+copy_out $full_backup_path/surrogate.log
+echo $full_backup_path/surrogate.log >> $surr_full_status
+echo $full_backup_path/surrogate.log | sed "s;/backup;$backup_report_host/`hostname`;" >> $surr_full_status
+##
 dblist=`mysql -u $mysql_user -p${mysql_pass} -S $mysql_socket -se "show databases"  | grep -v ^Database$ | grep -v ^information_schema$`
 catch $surr_full_status
 for database in $dblist; do
