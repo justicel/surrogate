@@ -38,6 +38,7 @@ prompt_user backup_directory 'Directory to store backups' '/backup/mysql'
 prompt_user cron_h 'Hour to run full backups at' '8'
 prompt_user cron_m 'Minute to run full backups at' '0'
 prompt_user install_qpress 'Should qpress be installed? [Y/N]' 'N'
+prompt_user backup_report_host 'backup_report_host:' 'http://somereporthost.com'
 
 echo "Installing Surrogate..."
 
@@ -57,6 +58,7 @@ chmod 600 $confdir/surrogate.conf
 sed -i "s|<mysql_socket>|$mysql_socket|" $confdir/surrogate.conf
 sed -i "s|<mysql_user_db>|$mysql_user_db|" $confdir/surrogate.conf
 sed -i "s|<mysql_pass_db>|$mysql_pass_db|" $confdir/surrogate.conf
+sed -i "s|<backup_report_host>|$backup_report_host|" $confdir/surrogate.conf
 
 sed -i "s|<datadir>|$datadir|" $confdir/surrogate.conf
 sed -i "s|<mysql_user_db>|$mysql_user_db|" $confdir/surrogate.conf

@@ -14,6 +14,12 @@ determine_full_backup_path
 test -d `dirname $full_backup_path` || mkdir -p `dirname $full_backup_path`
 # Re-read surrogate.conf
 update_vars
+## experimental backup log output 
+copy_out $full_backup_path/surrogate.log
+echo $full_backup_path/surrogate.log >> $surr_full_status
+echo $full_backup_path/surrogate.log | sed "s;/backup;$backup_report_host/`hostname`;" >> $surr_full_statu
+s
+##
 # Explain what is being sent to innobackupex and run it
 echo "$full_backup" 
 eval $full_backup
