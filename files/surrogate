@@ -21,8 +21,8 @@ rebuild_configs_for_instance() {
 	mysql_collapse_path="$original_collapse_path/$instance"
 	mysql_sanity_path="$original_sanity_path/$instance"
 	inc_backup_path="$backup_directory/$today/inc_$now"
-  last_backup=$(tail -n1 $backup_directory/.digest || touch $backup_directory/.digest)
-	digest="$backup_directory/.digest"
+  digest="$backup_directory/.digest"
+  last_backup=$(tail -n1 $digest || touch $digest)
 }
 
 usage() { 
