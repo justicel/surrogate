@@ -26,22 +26,22 @@ rebuild_configs_for_instance() {
 }
 
 usage() { 
-  cat <<-EOF
-  	usage: $0 options
-  
-  	This script must be run with sudo or as root, 
-    it also expects some arguments, please oblige!
-  
-  	OPTIONS:
-  
-  	-h	Shows this message
-  	-b	Backup, either incremental or full, 
-        "surrogate -b full", "surrogate -b inc", or "surrogate -b dump" for mysqldump
-  	-r 	Restore using default digest location (only for backups made using full or inc.)
-  	-c 	Restore, accepts a file containing a list of directories to restore.
-	
-  EOF
-  exit 1
+cat <<-EOF
+	usage: $0 options
+
+	This script must be run with sudo or as root, 
+  it also expects some arguments, please oblige!
+
+	OPTIONS:
+
+	-h	Shows this message
+	-b	Backup, either incremental or full, 
+      "surrogate -b full", "surrogate -b inc", or "surrogate -b dump" for mysqldump
+	-r 	Restore using default digest location (only for backups made using full or inc.)
+	-c 	Restore, accepts a file containing a list of directories to restore.
+
+EOF
+exit 1
 }
 
 determine_full_backup_path(){
