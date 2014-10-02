@@ -21,37 +21,37 @@ rebuild_configs_for_instance() {
 	mysql_collapse_path="$original_collapse_path/$instance"
 	mysql_sanity_path="$original_sanity_path/$instance"
 	inc_backup_path="$backup_directory/$today/inc_$now"
-	last_backup=`tail -n1 $backup_directory/.digest`
+  last_backup=$(tail -n1 $backup_directory/.digest)
 	digest="$backup_directory/.digest"
 }
 
 usage() { 
-cat <<-EOF
-	usage: $0 options
-
-	This script must be run with sudo or as root, 
-  it also expects some arguments, please oblige!
-
-	OPTIONS:
-
-	-h	Shows this message
-	-b	Backup, either incremental or full, 
-      "surrogate -b full", "surrogate -b inc", or "surrogate -b dump" for mysqldump
-	-r 	Restore using default digest location (only for backups made using full or inc.)
-	-c 	Restore, accepts a file containing a list of directories to restore.
+  cat <<-EOF
+  	usage: $0 options
+  
+  	This script must be run with sudo or as root, 
+    it also expects some arguments, please oblige!
+  
+  	OPTIONS:
+  
+  	-h	Shows this message
+  	-b	Backup, either incremental or full, 
+        "surrogate -b full", "surrogate -b inc", or "surrogate -b dump" for mysqldump
+  	-r 	Restore using default digest location (only for backups made using full or inc.)
+  	-c 	Restore, accepts a file containing a list of directories to restore.
 	
-EOF
-exit 1
+  EOF
+  exit 1
 }
 
 determine_full_backup_path(){
-if [ `date +%d` == $monthly_backup ]; then
-	full_backup_path="$backup_directory/monthly/${type}_$now"
-elif [ `date +%a` == $weekly_backup ]; then
-	full_backup_path="$backup_directory/weekly/${type}_$now"
-else
-	full_backup_path="$backup_directory/daily/${type}_$now"
-fi
+  if [ $(date +%d) == $monthly_backup ]; then
+  	full_backup_path="$backup_directory/monthly/${type}_$now"
+  elif [ $(date +%a) == $weekly_backup ]; then
+  	full_backup_path="$backup_directory/weekly/${type}_$now"
+  else
+  	full_backup_path="$backup_directory/daily/$today/${type}_$now"
+  fi
 }
 
 catch() {
@@ -79,7 +79,7 @@ update_vars() {
 # if there is no input, barf
 test $# -ge 1 || usage
 # make sure ran as root and check prereqs
-test `whoami` == "root" || { echo "Need to run as root!"; exit 1; }
+test $(whoami) == "root" || { echo "Need to run as root!"; exit 1; }
 { which innobackupex && which rsync; } &>/dev/null || { echo "Make sure you have rsync and percona-xtrabackup installed."; exit 1; }
 
 update_vars
@@ -101,7 +101,7 @@ do
 	elif [[ "$type" == "inc" ]]; then
 		source $my_root/lib/inc
 	elif [[ "$type" == "dump" ]]; then
-	      source $my_root/lib/dump	
+    source $my_root/lib/dump	
 	else
 		echo "Please specify full or incremental"
 		usage
@@ -117,7 +117,7 @@ do
   esac
 done
 
-count=`echo $mysql_instances | wc -w`
+count=$(echo $mysql_instances | wc -w)
 
 # Check vars & perform the loaded action
 if [ $count -gt 1 ]; then

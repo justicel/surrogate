@@ -11,7 +11,7 @@ fi
 # Function defined in main surrogate lib. Updates $full_backup_path var based on day of week / month.
 determine_full_backup_path
 # If $backup_directory/[monthly|weekly|daily] does not exist, create it.
-test -d `dirname $full_backup_path` || mkdir -p `dirname $full_backup_path`
+test -d $(dirname $full_backup_path) || mkdir -p $(dirname $full_backup_path)
 # Re-read surrogate.conf
 update_vars
 # Explain what is being sent to innobackupex and run it
