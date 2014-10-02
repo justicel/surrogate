@@ -53,7 +53,7 @@ exit 1
 determine_full_backup_path(){
   if [ $(date +%d) == $monthly_backup ]; then
   	full_backup_path="$backup_directory/$month/${type}_$now"
-  elif [ $(date +%a) == $weekly_backup ]; then
+  elif [ $(date +%A) == $weekly_backup ]; then
   	full_backup_path="$backup_directory/$week/${type}_$now"
   else
   	full_backup_path="$backup_directory/$today/${type}_$now"
