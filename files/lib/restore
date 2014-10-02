@@ -47,7 +47,7 @@ perform_action() {
   # explain what is being sent to innobackupex
   echo "Preparing full backup..."
   echo $full_prep
-  eval $full_prep
+  eval $full_prep 2> $logfile_r
   catch
   # find the incrementals and loop restore them
   grep inc_ $digest | while read incremental_backup ; do
@@ -62,7 +62,7 @@ perform_action() {
   	find $incremental_backup -name .delta -empty -maxdepth 2 -exec rm -v {} \;
   	# Explain what is being sent to innobackupex
   	echo $inc_restore
-  	eval $inc_restore
+  	eval $inc_restore 2> $logfile_r
   	catch 
   	# clear out temp directory before proceeding to the next incremental
   	rm -vR $active_incremental
@@ -70,9 +70,9 @@ perform_action() {
   # run inno log apply
   echo "Applying logs"
   echo $log_apply
-  eval $log_apply 
+  eval $log_apply 2> $logfile_r
   catch
-  eval $shutdown_command
+  eval $shutdown_command 2> $logfile_r
   echo "Moving mysql data files..."
   rm -rf $mysql_sanity_path
   mv -fv $mysql_data_path $mysql_sanity_path
@@ -80,7 +80,7 @@ perform_action() {
   
   # file restore 
   echo $file_restore
-  eval $file_restore
+  eval $file_restore 2> $logfile_r
   catch
   echo "Starting cleanup tasks"
   rm -Rv $mysql_log_path/*
@@ -89,6 +89,6 @@ perform_action() {
   chmod 700 -R $mysql_log_path/ && chown mysql:mysql -R $mysql_log_path/
   rm -vR $active_backup/*
   rmdir -v $active_backup
-  eval $startup_command
+  eval $startup_command 2> $logfile_r
   echo "Restore Completed OK!"
 }

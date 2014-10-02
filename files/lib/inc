@@ -13,7 +13,7 @@ perform_action() {
   # Explain what is being sent to innobackupex.
   echo $inc_backup
   # Perform incremental backup from where the last backup stopped.
-  eval $inc_backup 
+  eval $inc_backup 2> $logfile_i
   catch $surr_inc_status
   # Update index / digest file with new inc backup
   echo $inc_backup_path >> $digest
