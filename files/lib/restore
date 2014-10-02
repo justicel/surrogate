@@ -3,20 +3,20 @@
 # restoration function
 
 locate_mysql_commands(){
-# System V
-if [ -f "/etc/init.d/mysql" ]; then
-	startup_command="/etc/init.d/mysql start"
-	shutdown_command="/etc/init.d/mysql stop"
-# System D
-elif [ -f "/usr/bin/systemctl" ]; then
-	startup_command="/usr/bin/systemctl start mysqld"
-	shutdown_command="/usr/bin/systemctl stop mysqld"
-else
-	sur_out
-	echo "Can't determine the mysql startup/shutdown commands!"
-	clear_out
-	exit 1
-fi
+  # System V
+  if [ -f "/etc/init.d/mysql" ]; then
+  	startup_command="/etc/init.d/mysql start"
+  	shutdown_command="/etc/init.d/mysql stop"
+  # System D
+  elif [ -f "/usr/bin/systemctl" ]; then
+  	startup_command="/usr/bin/systemctl start mysqld"
+  	shutdown_command="/usr/bin/systemctl stop mysqld"
+  else
+  	sur_out
+  	echo "Can't determine the mysql startup/shutdown commands!"
+  	clear_out
+  	exit 1
+  fi
 }
 
 perform_action() {
