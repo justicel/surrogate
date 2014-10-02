@@ -3,7 +3,9 @@
 # backup rotation/retention
 
 function rotate_backups() {
+  echo "Attempting backup rotation..."
 	find $backup_directory/daily/ -maxdepth 2 -mindepth 2 -type d -mtime +${daily_retention} -exec rm -fvR {} \;
 	find $backup_directory/weekly/ -maxdepth 2 -mindepth 2 -type d -mtime +${weekly_retention} -exec rm -fvR {} \;
 	find $backup_directory/monthly/ -maxdepth 2 -mindepth 2 -type d -mtime +${monthly_retention} -exec rm -fvR {} \;
+  echo "Rotation completed"
 }

@@ -11,7 +11,9 @@ perform_action() {
   # Re-read surrogate.conf
   update_vars
   # Explain what is being sent to innobackupex.
+  echo "Running incremental-backup using command:"
   echo $inc_backup
+  echo "Logging to $logfile_i"
   # Perform incremental backup from where the last backup stopped.
   eval $inc_backup 2> $logfile_i
   catch $surr_inc_status
