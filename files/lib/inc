@@ -10,6 +10,9 @@ perform_action() {
 
   # Re-read surrogate.conf
   update_vars
+  # If inc_backup_path does not exist, create it.
+  test -d $(dirname $inc_backup_path) || mkdir -p $(dirname $inc_backup_path)
+
   # Explain what is being sent to innobackupex.
   echo "Running incremental-backup using command:"
   echo $inc_backup
